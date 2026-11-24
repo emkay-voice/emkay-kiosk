@@ -51,8 +51,8 @@ A few things apply to every device:
   Home must trust Home's certificate first, as described in Emkay Home's README.
 - **Can the device run it?** Emkay does speech on the device by default. That needs a fairly recent
   browser and some memory (roughly 6 GB or more for the best models; smaller devices get a lighter
-  model). Emkay tells you on its first start if a device can't do it. You can then let your Emkay
-  Home do the speech, or choose OpenVoiceOS' servers.
+  model). Emkay tells you on its first start if a device can't do it. You can then let an Emkay
+  Home that offers speech do it, or choose OpenVoiceOS' servers.
 - **Keep the screen on.** Emkay comes with [ovos-skill-kiosk](https://github.com/emkay-voice/ovos-skill-kiosk):
   say *"Keep the screen on"* and *"Go full screen"*, or use the *Screen* page in the control panel.
   Then you don't need to turn off screen sleep in the device's own settings.

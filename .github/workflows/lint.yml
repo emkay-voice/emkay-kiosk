@@ -1,0 +1,34 @@
+name: Lint helper scripts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck
+        run: shellcheck -x scripts/linux/*.sh render/*.sh
+      - name: Dry run
+        run: |
+          sudo scripts/linux/emkay-kiosk.sh --dry-run --user runner
+          sudo scripts/linux/emkay-kiosk.sh --dry-run --dedicated
+          sudo scripts/linux/emkay-kiosk.sh --dry-run --uninstall
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          $r = Invoke-ScriptAnalyzer -Path scripts/windows -Recurse -Severity Error,Warning `
+               -ExcludeRule PSAvoidUsingWriteHost
+          $r | Format-Table -AutoSize
+          if ($r) { exit 1 }
+      - name: WhatIf run
+        shell: pwsh
+        run: scripts/windows/emkay-kiosk.ps1 -WhatIf
