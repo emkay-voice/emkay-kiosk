@@ -62,7 +62,9 @@ $edge = @(
 ) | Where-Object { Test-Path $_ } | Select-Object -First 1
 
 # Adds $origin to a list policy (values named 1, 2, 3, ...) without touching other entries.
-function Add-OriginToPolicy([string]$name) {
+function Add-OriginToPolicy {
+    [CmdletBinding(SupportsShouldProcess)]
+    param([string]$name)
     $key = Join-Path $policyRoot $name
     if (-not (Test-Path $key)) {
         if ($PSCmdlet.ShouldProcess($key, "Create policy key")) { New-Item -Path $key -Force | Out-Null }
@@ -79,7 +81,9 @@ function Add-OriginToPolicy([string]$name) {
 }
 
 # Removes $origin from a list policy, leaving other entries alone.
-function Clear-OriginFromPolicy([string]$name) {
+function Clear-OriginFromPolicy {
+    [CmdletBinding(SupportsShouldProcess)]
+    param([string]$name)
     $key = Join-Path $policyRoot $name
     if (-not (Test-Path $key)) { return }
     $values = Get-ItemProperty -Path $key
